@@ -19,3 +19,11 @@ export const POST = async (request: Request) => {
 
   return NextResponse.json({ message: "Category created", category });
 };
+
+export async function DELETE(request: Request) {
+  await connectDB();
+  const body = await request.json();
+  const { _id } = body;
+  const category = await FoodCategory.findByIdAndDelete(_id);
+  return NextResponse.json({ message: "DELETE request received", category });
+}
