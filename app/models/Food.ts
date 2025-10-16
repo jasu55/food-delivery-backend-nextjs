@@ -2,16 +2,14 @@ import { Schema, model, models } from "mongoose";
 
 const FoodSchema = new Schema(
   {
-    foodName: { type: String, required: true },
+    name: { type: String, required: true },
     price: { type: Number, required: true },
-    image: { type: String, required: true },
+    imageUrl: { type: String, required: true },
     ingredients: { type: String, required: true },
-    category: { type: Schema.ObjectId, ref: "Foodcategory", required: true },
+    categoryId: { type: Schema.ObjectId, ref: "Foodcategory", required: true },
   },
   { timestamps: true }
 );
 
-const Food = models.Food || model("Food", FoodSchema);
+export const Food = models.Food || model("Food", FoodSchema);
 
-export default Food;
-//xaxa
