@@ -1,16 +1,41 @@
-import { connectDB } from "@/lib/connectDb";
-import Food from "@/app/models/Food";
-import { NextResponse } from "next/server";
+import { createFood, getAllFoods } from "@/lib/services/food-service";
+import { uploadImageToCloudinary } from "@/lib/utils/uploadImage";
+import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (request: Request) => {
-  await connectDB();
-  const food = await Food.create({
-    foodName: "Pizza",
-    price: 200,
-    image:
-      "https://www.shutterstock.com/image-photo/delicious-pizza-on-wooden-table-260nw-1937697031.jpg",
-    ingredients: "Cheese, Tomato, Basil",
-    category: "68edcb0c28003a6395e73052",
-  });
-  return NextResponse.json({ message: "Food created", data: food });
+export async function POST(request: NextRequest) {
+  const formData = await request.formData();
+
+  // Extract food fields from formData
+  const name = formData.get("name") as string;
+  const ingredients = formData.get("ingredients") as string;
+  const price = formData.get("price") as string;
+  const categoryId = formData.get("categoryId") as string;
+  const image = formData.get("image") as File;
+
+  const uploadedUrl = await uploadImageToCloudinary(image);
+
+  const result = await createFood(
+    name,
+    ingredients,
+    Number(price),
+    categoryId,
+    uploadedUrl
+  );
+
+  if (result) {
+    return NextResponse.json(
+      { message: "Food item received successfully" },
+      { status: 200 }
+    );
+  } else {
+    return NextResponse.json(
+      { message: "Food Failed to create" },
+      { status: 400 }
+    );
+  }
+}
+
+export const GET = async () => {
+  const foods = await getAllFoods();
+  return NextResponse.json({ data: foods }, { status: 200 });
 };
