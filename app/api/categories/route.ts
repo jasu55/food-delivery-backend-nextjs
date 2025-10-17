@@ -11,7 +11,7 @@ export async function GET() {
 export const POST = async (request: Request) => {
   await connectDB();
   const body = await request.json();
-  console.log("body", body);
+  console.log("body", body)
 
   const category = await FoodCategory.create({
     categoryName: body.categoryName,
