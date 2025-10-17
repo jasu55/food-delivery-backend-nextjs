@@ -1,4 +1,4 @@
-import { createFood, getAllFoods } from "@/lib/services/food-service";
+import { createFood, getAllFoods } from "@/lib/service/food-service";
 import { uploadImageToCloudinary } from "@/lib/utils/uploadImage";
 import { NextRequest, NextResponse } from "next/server";
 

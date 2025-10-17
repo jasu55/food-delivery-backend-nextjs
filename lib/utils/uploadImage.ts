@@ -1,6 +1,7 @@
 import cloudinary from "../config/cloudinary";
 
 export const uploadImageToCloudinary = async (image: File): Promise<string> => {
+  console.log("aaaaaaaa=", image);
   try {
     // Convert File to base64
     const bytes = await image.arrayBuffer();
@@ -16,6 +17,7 @@ export const uploadImageToCloudinary = async (image: File): Promise<string> => {
 
     return result.secure_url;
   } catch (error) {
+    console.log("Cloudinary Upload Error:", error);
     throw new Error("Failed to upload image to Cloudinary");
   }
 };

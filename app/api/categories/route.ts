@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import FoodCategory from "@/app/models/Category";
+import FoodCategory from "@/lib/models/Category";
 import { connectDB } from "@/lib/connectDb";
 
 export async function GET() {
